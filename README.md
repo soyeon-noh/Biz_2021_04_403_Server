@@ -48,3 +48,6 @@ https://naver.com:443 과 같다
 * 컴퓨터의 Local Loop Back Address
 * Local에서 Server등의 서비스를 실행하고 테스트 할 수 있는 주소
 * (지구상의 모든 컴퓨터에 다 있대)
+
+
+### git 오류내기
