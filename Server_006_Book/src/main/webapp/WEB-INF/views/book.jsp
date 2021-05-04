@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" 
-		prefix="c" %>
 		<!-- 이 사이트에 있는 것을 가져오고 그 이름을 c라고 하겠다 -->
 <!DOCTYPE html>
 <html>
