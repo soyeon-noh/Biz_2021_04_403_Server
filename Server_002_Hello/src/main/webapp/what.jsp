@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
-	// request¿¡¼­ Àü´ÞÇÑ ¸Å°³º¯¼ö(Parameter)¸¦ ¹Þ¾Æ¼­
-	// ÀÖÀ¸¸é ¹®ÀÚ¿­ º¯¼ö name¿¡ ´ã¾Æ¶ó 
+	// requestì—ì„œ ì „ë‹¬í•œ ë§¤ê°œë³€ìˆ˜(Parameter)ë¥¼ ë°›ì•„ì„œ
+	// ìžˆìœ¼ë©´ ë¬¸ìžì—´ ë³€ìˆ˜ nameì— ë‹´ì•„ë¼ 
 	String name = request.getParameter("name");
 
-	// 0 ~ 99±îÁö ¹üÀ§ÀÇ ÀÓÀÇÀÇ ³­¼ö¸¦ »ý¼ºÇÏ¿©
-	// Á¤¼öÇü º¯¼ö num¿¡ ´ã¾Æ¶ó
+	// 0 ~ 99ê¹Œì§€ ë²”ìœ„ì˜ ìž„ì˜ì˜ ë‚œìˆ˜ë¥¼ ìƒì„±í•˜ì—¬
+	// ì •ìˆ˜í˜• ë³€ìˆ˜ numì— ë‹´ì•„ë¼
 	int num = (int)(Math.random() * 100);
 %>
 <!DOCTYPE html>
@@ -16,11 +16,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>¹Ý°©½À´Ï´Ù <%= name %> ´Ô</h1>
-	<h3>»ý¼ºµÈ ¼ö´Â ? <%= num %></h3>
+	<h1>ë°˜ê°‘ìŠµë‹ˆë‹¤ <%= name %> ë‹˜</h1>
+	<h3>ìƒì„±ëœ ìˆ˜ëŠ” ? <%= num %></h3>
 	
 	<p>========================================</p>
-	<p>7 ±¸±¸´Ü </p>
+	<p>7 êµ¬êµ¬ë‹¨ </p>
 	<p>----------------------------------------</p>
 	<%
 	for(int i = 0; i < 9; i++){

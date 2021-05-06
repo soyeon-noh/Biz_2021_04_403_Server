@@ -20,12 +20,9 @@ import lombok.ToString;
  * 조회할 때 (SELECT ) Service 각 method 가 return할 type
  */
 
-
-
 @Getter
-@Setter	
+@Setter
 @ToString
-
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRentDTO {

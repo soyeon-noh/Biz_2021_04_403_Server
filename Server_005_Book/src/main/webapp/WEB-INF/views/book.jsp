@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body> 	<!--  µµ¼­ÄÚµå°Ë»ö¿¡ 9791188850303 Ä¡¸é  -->
-	<p>${BOOK.bk_title} <!-- À¥Ã¢¿¡ ÁøÁ¤ÇÑ ³ª·Î »ì¾Æ°¥ ¿ë±â -->
-	<p>${BOOK.bk_cname} <!-- Ritec Contents  ¶ó°í ¶á´Ù -->
+<body> 	<!--  ë„ì„œì½”ë“œê²€ìƒ‰ì— 9791188850303 ì¹˜ë©´  -->
+	<p>${BOOK.bk_title} <!-- ì›¹ì°½ì— ì§„ì •í•œ ë‚˜ë¡œ ì‚´ì•„ê°ˆ ìš©ê¸° -->
+	<p>${BOOK.bk_cname} <!-- Ritec Contents  ë¼ê³  ëœ¬ë‹¤ -->
 	
 </body>
 </html>

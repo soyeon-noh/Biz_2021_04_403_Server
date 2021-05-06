@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class BuyerDTO {
 
 	private String bu_code; //	char(5 byte)

@@ -2,6 +2,8 @@ package com.callor.book.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,12 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.callor.book.model.BookDTO;
 import com.callor.book.model.BookRentDTO;
 import com.callor.book.model.BookRentVO;
 import com.callor.book.model.BuyerDTO;
 import com.callor.book.service.BookRentService;
+import com.callor.book.service.BookService;
 import com.callor.book.service.BuyerService;
 import com.callor.book.service.impl.BookRentServiceImplV1;
+import com.callor.book.service.impl.BookServiceImplV1;
 import com.callor.book.service.impl.BuyerServiceImplV1;
 
 /*
@@ -33,11 +38,12 @@ public class BookRentController extends HttpServlet{
 	
 	protected BookRentService brService;
 	protected BuyerService buService;
-	
+	protected BookService bkService;
 	
 	public BookRentController() {
 		brService = new BookRentServiceImplV1(); // new... 추가하기
 		buService = new BuyerServiceImplV1();
+		bkService = new BookServiceImplV1();
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +53,7 @@ public class BookRentController extends HttpServlet{
 		// rent/seq 라고 요청하면
 		// subPath 에는 /req 라는 문자열이 담길 것이다.
 		String subPath = req.getPathInfo(); // /rent/* 이거 뒤에 오는 별
-		
+		System.out.println(subPath);
 		
 		// outputStream을 사용하여 문자열 방식으로
 		// 응답을 하기위한 준비
@@ -113,8 +119,8 @@ public class BookRentController extends HttpServlet{
 
 		} else if(subPath.equals("/list")) {
 			// 도서대여 전체 목록
-			out.println("도서대여 전체목록 보기");
 			brService.selectAll();
+			out.println("도서대여 전체목록 보기");
 		} else if(subPath.equals("/isbn")) {
 			// 도서 코드로 찾기
 			brService.findByBISBN("ibsn");
@@ -148,10 +154,15 @@ public class BookRentController extends HttpServlet{
 				}
 				System.out.println("=".repeat(50));
 				
+				// ServletContext를 생성하여 속성(변수)세팅하기
+				// ServletContext app = req.getServletContext();
+				// app.setAttribute("BUYERS", buList);
 				
-				ServletContext app = req.getServletContext();
-				app.setAttribute("BUYERS", buList);
+				// req 객체에 바로 세팅하기
+				req.setAttribute("BUYERS", buList);
 				
+				// page1.jsp 파일을 열고 BUYERS 변수와 함께
+				// Rendering을 하여 HTML 코드를 생성하라
 				RequestDispatcher disp
 				= req.getRequestDispatcher("/WEB-INF/views/page1.jsp");
 				disp.forward(req,  resp);
@@ -160,16 +171,85 @@ public class BookRentController extends HttpServlet{
 		} else if(subPath.equals("/order/page2")) {
 			
 			String bu_code = req.getParameter("bu_code");
+			
+			// bu_code 값에 해당하는 회원정보 추출
 			BuyerDTO buyerDTO = buService.findById(bu_code);
+			if(buyerDTO != null) {
+				// bu_code 값에 해당하는 회원정보가 있으면
+				// Console에 출력
+				System.out.println(buyerDTO.toString());	
+			}
 			
-			ServletContext app = req.getServletContext();
+			// ServletContext app = req.getServletContext();
+			// app.setAttribute("BUYER", buyerDTO);
+			req.setAttribute("BUYER", buyerDTO);
 			
-			app.setAttribute("BUYER", buyerDTO);
-			
+			// BUYER에 담긴 회원정보를 page2.jsp에
+			// Rendering하여 보여라
 			RequestDispatcher disp 
 					= req.getRequestDispatcher("/WEB-INF/views/page2.jsp");
-			
 			disp.forward(req, resp); //클라이언트에게 resp 보내야함.
+			
+		} else if(subPath.equals("/order/book")) {
+			String bu_code = req.getParameter("bu_code");
+			String bk_title = req.getParameter("bk_title");
+			
+			if(bk_title == null || bk_title.equals("")) {
+				out.println("도서명을 입력하세요");
+				out.close();
+			} else {
+
+				// 회원정보를 한번더 조회
+				BuyerDTO buDTO = buService.findById(bu_code);
+				req.setAttribute("BUYER", buDTO);
+				
+				List<BookDTO> bookList 
+				= bkService.findByTitle(bk_title);
+				
+				req.setAttribute("BOOKS", bookList);
+				
+				// method chaining 방식으로 연속 호출하기
+				req
+				.getRequestDispatcher("/WEB-INF/views/book.jsp")
+				.forward(req, resp);
+				
+			}
+			
+		} else if(subPath.endsWith("/order/insert")) {
+			String bk_isbn = req.getParameter("bk_isbn");
+			String bu_code = req.getParameter("bu_code");
+
+			// 대여일자값을 생성하기 위하여
+			// 날짜클래스와 날짜포멧클래스를 사용하여
+			// 대여일자 문자열 만들기
+			
+			// 현재 컴퓨터 시스템 날짜 가져오기
+			Date date = new Date( System.currentTimeMillis() ); 
+			
+			// 날짜 데이터를 문자열로 변환하기 위한 설정
+			SimpleDateFormat sd 
+				= new SimpleDateFormat("yyyy-MM-dd");
+			
+			// 날짜 데이터를 설정한 포멧대로 문자열로 변환
+			String sDate = sd.format(date);
+			System.out.println("대여일자 : " + sDate);
+			
+			// INSERT 를 수행하기 위해
+			// VO를 만들고 web에서 전달받은
+			// 도서ISBN과 회원CODE를 Setting
+			BookRentVO brVO = new BookRentVO();
+			brVO.setBr_sdate(sDate);
+			brVO.setBr_isbn(bk_isbn);
+			brVO.setBr_bcode(bu_code);
+			brVO.setBr_price(1000);
+			
+			int result = brService.insert(brVO);
+			if(result > 0) {
+				out.println("대여정보 추가 성공!!!");
+			} else {
+				out.println("대여정보 추가 실패!!");
+			}
+			out.close();
 			
 			
 		} else if(subPath.equals("/return")) {
@@ -179,6 +259,8 @@ public class BookRentController extends HttpServlet{
 			
 		} else {
 			// 더이상 그만하기
+			out.println("NOT FOUND");
+			out.close();
 		}
 	}
 	
