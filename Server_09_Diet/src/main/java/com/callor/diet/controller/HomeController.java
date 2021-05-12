@@ -15,7 +15,11 @@ public class HomeController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 서버를 처음 run했을때 최초로 보여지는 화면설정 (MVC 패턴)
-		req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp); 
+		
+//		req.getRequestDispatcher("/WEB-INF/views/home.jsp")
+//		.forward(req, resp);
+		
+		ReqController.forward(req, resp, "home"); // 오타를 방지하기위한 Req 메서드 사용
 		
 		
 	}
