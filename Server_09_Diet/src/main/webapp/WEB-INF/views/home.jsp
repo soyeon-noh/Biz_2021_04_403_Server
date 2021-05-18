@@ -13,7 +13,8 @@ css, js 등 외부 파일을 변경해도 적용이 안되는 경우가 있다.
 ?ver=숫자 값을 변경하면 chrome browser가 
 파일이 변경된 것으로 인식하여 새로고침을 해준다.
  --%>
-<link href="${rootPath}/css/home.css?ver=1" rel="stylesheet"/>
+<link href="${rootPath}/css/home.css?ver=2021-05-18-112" 
+		rel="stylesheet"/>
 
 
 <%--

@@ -56,7 +56,7 @@ public class KoreaFilter implements Filter{
 		 * 데이터들의 ContentType을 설정하기
 		 */
 		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html;charset=UTF-8");
+		// resp.setContentType("text/html;charset=UTF-8"); // 이거때문에 css적용이안되어서 안넘어간다고??
 		chain.doFilter(req, resp); // 이거 안쓰면 컨트롤러로 안넘어갈때있으니 꼭 써주기
 		
 		

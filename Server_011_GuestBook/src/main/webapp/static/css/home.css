@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+/* 여백을 초기화하는 코드 */
+
+h1 {
+	color:white;
+	text-align: center;
+	background-color: rgba(153,131,250,98); 
+	/*
+	HTML, CSS에서의 단위구조
+	
+	dp, sp, pt, px : 절대값으로 단위 지정하기.
+						(px은 요즘은 사용 x)
+	
+	rem(em) : 상대값으로 단위 지정하기.
+				내부에 Text 포함된 tag인 경우
+				Text 높이를 1rem(em)으로 설정하고,
+				비율에 맞춰서 상대적으로 크기를 지정한다.
+				(em을 썼었는데 요즘에 rem을 권장한다!)
+	*/
+	padding:2rem;
+}
+
+nav {
+	background-color: blue;	
+}
+
+ul {
+	margin: 0px;
+	background-color: rgba(217,250,247,0.98);
+}
+
+li {
+	display: inline-block;
+	list-style: none;
+	margin: 0px;
+	padding: 10px;
+	color: #5B99E6;
+}
+
+li:hover {
+	background-color: #2C7FE6;
+	color: black;
+}
+
+table {
+	border-collapse: collapse;
+	width: 80%;
+	margin: 10px auto;
+}
+
+td, th {
+	border: 1px solid #9882FA;
+	padding: 5px;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
