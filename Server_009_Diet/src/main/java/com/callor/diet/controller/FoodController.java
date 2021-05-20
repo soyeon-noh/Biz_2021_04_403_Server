@@ -86,17 +86,14 @@ public class FoodController extends HttpServlet{
 		//req.setCharacterEncoding("UTF-8"); // 컨트롤러에 한글! 
 		// 이거 대신할 KoreaFilter 만들었음
 		
-		
 		String subPath = req.getPathInfo();
-		
 		if(subPath == null || subPath.equals("")) {
 			System.out.println("요청 subPath가 없음");
-		} else if(subPath.equals("/search")) {
 			
+		} else if(subPath.equals("/search")) {
 			// form에 입력된 데이터를 
 			//		추출(파라메터를 Get)하고
 			String f_name = req.getParameter("f_name");
-			
 			// DB에서 조회하여 다시 Web에 보여주기
 			List<FoodDTO> foodList 
 				= fdService.findByFName(f_name);
@@ -120,11 +117,6 @@ public class FoodController extends HttpServlet{
 			} else {
 				System.out.println("추가 실패");
 			}
-			
 		}
 	}
-	
-	
-	
-	
 }

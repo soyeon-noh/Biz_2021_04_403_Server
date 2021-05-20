@@ -37,7 +37,6 @@ public class HomeController extends HttpServlet{
 			mfList = mfService.findByDate(mf_date);
 		}
 		req.setAttribute("MFOODS", mfList);
-		
 		ReqController.forward(req, resp, "home"); // 오타를 방지하기위한 Req 메서드 사용
 	}
 }
