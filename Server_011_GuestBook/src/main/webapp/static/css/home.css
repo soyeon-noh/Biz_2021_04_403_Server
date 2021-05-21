@@ -26,28 +26,6 @@ h1 {
 	padding:2rem;
 }
 
-nav {
-	background-color: blue;	
-}
-
-ul {
-	margin: 0px;
-	background-color: rgba(217,250,247,0.98);
-}
-
-li {
-	display: inline-block;
-	list-style: none;
-	margin: 0px;
-	padding: 10px;
-	color: #5B99E6;
-}
-
-li:hover {
-	background-color: #2C7FE6;
-	color: black;
-}
-
 table {
 	border-collapse: collapse;
 	width: 80%;
