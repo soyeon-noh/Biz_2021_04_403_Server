@@ -11,8 +11,8 @@ public class MySQLConnection {
 	static {
 		
 		String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-		String url = "jdbc:mysql://127.0.0.1:3306/guestbook";
-		String username = "gbUser";
+		String url = "jdbc:mysql://localhost:3306/schooldata";
+		String username = "scUser";
 		String password = "12345";
 		
 		try {
