@@ -22,11 +22,16 @@ public class MySQLConnection {
 			}
 			System.out.println("MySQL 접속 성공!!!");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("MySQL Driver 를 찾을 수 없음");
+			System.out.println("MySQL Ojdbc6.jar 를 확인하세요");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("=".repeat(30));
+			System.out.println("MySQL DBMS 연결 실패!!");
+			System.out.println("접속 정보를 확인하세요!!");
+			System.out.println("URL : " + url);
+			System.out.println("User : " + username);
+			System.out.println("PW : " + password);
+			System.out.println("=".repeat(30));
 		}
 	}
 	public static Connection getDBConnection() {

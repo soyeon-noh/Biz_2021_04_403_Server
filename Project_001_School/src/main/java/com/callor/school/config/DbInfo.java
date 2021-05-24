@@ -2,11 +2,11 @@ package com.callor.school.config;
 
 public class DbInfo {
 
-	public static final String sc_num	="gb_seq";
-	public static final String sc_name	="gb_date";
-	public static final String sc_tel	="gb_time";
-	public static final String sc_addr	="gb_writer";
-	public static final String sc_grade	="gb_email";
-	public static final String sc_dep	="gb_password";
+	public static final String sc_num	="sc_num";
+	public static final String sc_name	="sc_name";
+	public static final String sc_tel	="sc_tel";
+	public static final String sc_addr	="sc_addr";
+	public static final String sc_grade	="sc_grade";
+	public static final String sc_dep	="sc_dep";
 }
 
