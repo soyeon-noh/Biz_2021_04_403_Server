@@ -25,18 +25,35 @@
 	}
 	
 	h1 {
-		background-color: rgb(0, 255, 0, 0.3);
+		background-color: rgb(0, 255, 20, 0.3);
 		color:white;
 		padding: 1rem;
 		text-align: center;
+		/* text에 그림자 지정 */
+		text-shadow: 1px 1px 1px #000;
 	}
 	
 	form.doit{
-		border: 1px solid red;
+		border: 1px solid rgb(0, 255, 20, 0.7);
 		padding: 10px;
 		tect-align: center;
 	}
 	
+	form.doit input{
+		width: 90%;
+		/* input box를 클릭하면
+		진한 box가 생기는 것을 방지*/
+		outline: 0; 
+		border: 1px solid #eee;
+		border-radius: 5px;
+		padding: 15px;
+		margin: 10px;
+		font-weight: bold;
+	}
+	
+	form.doit input:hover{
+		background-color: #eee;
+	}
 	
 </style>
 

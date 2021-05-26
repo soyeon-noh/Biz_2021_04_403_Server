@@ -50,6 +50,9 @@ public class FrontController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		// 한글설정
+		req.setCharacterEncoding("UTF-8");
+		
 		// Web에서 요청한 path 가져오기 
 		String urlPath = req.getRequestURI();
 		String path = urlPath.substring(req.getContextPath().length());
