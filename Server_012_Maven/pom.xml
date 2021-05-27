@@ -7,7 +7,22 @@
 	<version>0.1</version>
 	<packaging>pom</packaging>
 	<name>soyeon</name>
-
+	
+	
+	
+	<!-- 
+	pom.xml 에서 공통으로 사용할 변수
+	
+		Java Version 들
+	Java(1.1)
+	Java2(1.2~1.4)
+	Java5(1.5)
+	Java7(1.7~1.8) 가장많이사용하는 버전
+	Java8(1.8 ~ 9, 10, 11, 15, 16)
+	
+	1.8 stream 추가
+	10 새로운 변수 선언 키워드(var)   
+	 -->
 	<properties> <!-- 일종의 변수. -->
 		<java-version>15</java-version> <!-- java version이라는 변수를 만들어서 같이 변경되게 -->
 	</properties>
