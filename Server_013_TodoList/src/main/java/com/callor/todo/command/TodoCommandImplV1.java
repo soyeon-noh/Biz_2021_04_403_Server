@@ -38,10 +38,12 @@ public class TodoCommandImplV1 implements TodoCommand{
 		// TODO Auto-generated method stub
 		
 		String td_doit = req.getParameter("td_doit");
+		String td_seq = req.getParameter("td_seq");
 //		System.out.println(td_doit);
 		// Server APP에서 System.out.println() 대신 사용할 
 		//	console 출력 method
-		log.debug(td_doit);
+		log.debug("td_doit {}",td_doit);
+		log.debug("td_seq {}",td_seq);
 		
 		// Map으로 만든 동적(Dynamic) vo
 		// value를 Object로 만든 이유
@@ -52,8 +54,7 @@ public class TodoCommandImplV1 implements TodoCommand{
 		//		미리 어떤 Type으로 지정하기가 어려워
 		// 		Super parent Type인 Object 클래스 type으로 
 		//		선언한다.
-		Map<String,Object> tdVO
-			= new HashMap<String, Object>();
+		Map<String,Object> tdVO = null;
 		
 		// 최초로 TODO 추가하는 날짜, 시각을 자동생성
 		
@@ -73,6 +74,58 @@ public class TodoCommandImplV1 implements TodoCommand{
 		String curDate = sd.format(date);
 		String curTime = st.format(date);
 		
+		// request로부터 URI 정보를 추출하기
+		String uriPath = req.getRequestURI();
+		log.debug("URI {}", uriPath);
+		
+		// rootPath == contextRootPath == contextPath
+		String rootPath = req.getContextPath();
+		// 문자열.substring(어디서부터) : 어디서부터 끝까지 잘라서 추출!
+		// uriPath에서 rootPath를 제외한 나머지만 추출하여 달라!
+		String path = uriPath.substring(rootPath.length());
+		
+		log.debug("PATH: {}", path);
+		
+		if(path.equals("/insert")) { 
+			tdVO = new HashMap<String, Object>(); // insert일때는 VO 새로생성
+			
+			tdVO.put(DBInfo.td_sdate, curDate);
+			tdVO.put(DBInfo.td_stime, curTime);
+			tdVO.put(DBInfo.td_doit, td_doit);
+
+			log.debug("VO 데이터 {} ", tdVO.toString()); // 얘는 %s 말고 {}를 쓴대
+			
+			// insert로부터 전달받은 숫자
+			// 		1 이상이면 정상 insert이고,
+			//		그렇지 않으면 추가가 잘못된 것
+			Integer ret = toService.insert(tdVO);
+		
+		} else if(path.equals("/expire")) {
+			
+			// 전달받은 seq에 해당하는 데이터 가져오기
+			Long seq = Long.valueOf(td_seq);
+			tdVO = toService.findById(seq);
+			
+			log.debug("Find Byt Id {}", tdVO.toString());
+			
+			// 현재 조회된 TODO 정보에서
+			// 만료일자를 검사하여
+			// 		null 이거나 ""이면
+			Object e_date = tdVO.get(DBInfo.td_edate);
+			if(e_date == null || e_date.equals("")) {
+				
+				tdVO.put(DBInfo.td_edate, curDate);
+				tdVO.put(DBInfo.td_etime, curTime);
+			}
+			// 값이 있으면 
+			else {
+				tdVO.put(DBInfo.td_edate, null);
+				tdVO.put(DBInfo.td_etime, null);
+			}
+			log.debug("after set {} ", tdVO.toString());
+			toService.update(tdVO);
+		}
+		
 		// Map type의 VO에 현재 날짜, 시각, 할일 정보를 저장하기.
 		// VO에 칼럼을 추가하면서 동시에 데이터 저장하기.
 		// Map type의 VO에 데이터를 put() 할 때
@@ -80,23 +133,16 @@ public class TodoCommandImplV1 implements TodoCommand{
 		//			기존의 데이터를 수정한다.
 		//		없으면
 		//			새로운 칼럼을 추가하고 데이터를 저장한다.
+		tdVO.put("name", "홍길동"); // 예시코드 3줄
+		tdVO.put("name", "이몽룡");
+		tdVO.put("name", "성춘향");
 		
-		
-		tdVO.put(DBInfo.td_sdate, curDate);
-		tdVO.put(DBInfo.td_stime, curTime);
-		tdVO.put(DBInfo.td_doit, td_doit);
 
-		log.debug("VO 데이터 {} ", tdVO.toString()); // 얘는 %s 말고 {}를 쓴대
-		
-		// insert로부터 전달받은 숫자
-		// 		1 이상이면 정상 insert이고,
-		//		그렇지 않으면 추가가 잘못된 것
-		Integer ret = toService.insert(tdVO);
-		if(ret < 1) {
-			req.setAttribute("ERROR", "INSERT 실패!!");
-		} else {
-			req.setAttribute("COMP", "INSERT 성공!!");
-		}
+//		if(ret < 1) {
+//			req.setAttribute("ERROR", "INSERT 실패!!");
+//		} else {
+//			req.setAttribute("COMP", "INSERT 성공!!");
+//		}
 		
 		// "/todo/"
 		resp.sendRedirect( req.getContextPath());

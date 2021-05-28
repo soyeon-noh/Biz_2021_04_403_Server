@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MY TODO List</title>
 
 <style>
@@ -64,6 +65,24 @@
 		padding: 7px;
 		border-top: 1px solid green;
 		cursor: pointer;
+		
+		/* 
+		실험적인 css 적용하기
+		user-select:none은 text를 dblclick했을 때
+		선택박스가 나타나지 않도록 적용.
+		그냥 user-select : 기능이 적용되는 브라우저용
+		-webkit- : 크롬, 구글, 사파리 에 적용
+		-moz- : 파이어폭스계열 (리눅스용)
+		-ms- : 익스플로러
+		-o- : 오페라
+		*/
+		/* 더블클릭하면 블럭싸지는거 막기 */
+		user-select: none; 
+		
+		-webkit-user-select:none;
+		-moz-user-select:none;
+		-ms-user-select:none;
+		-o-user-select:none;
 	}
 	/* table의 마지막 라인(tr)에 포함된 td 에만 */
 	table.td_list tr:last-child td {
@@ -99,7 +118,64 @@
 		white-space: nowrap;
 	}		
 	
+	.through-text {
+		text-decoration: 2px line-through red wavy;
+	}
+
+	/* 화면폭이 800px 이하(max)일때 적용할 style */
+	@media screen and (max-width:800px) {
+		h1, form.doit, table.td_list {
+			width: 70%;
+			margin: 0 auto;
+		}
+	}
+		
+	/* 화면폭이 480px 이하(max)일때 적용할 style */
+	/* 더 작은경우 코드가 아래에 있어야하는듯 이게 위에 있으면 적용안됨*/
+	@media screen and (max-width:480px) {
+		h1, form.doit, table.td_list {
+			width: 95%;
+			margin: 0 auto;
+		}
+	}
+
+	
+
 </style>
+<script>
+	document.addEventListener("DOMContentLoaded",()=>{
+		
+		document
+		.querySelector("table.td_list")
+		.addEventListener("dblclick",(ev)=>{
+			
+			ev.preventDefault()
+			
+			let tagName = ev.target.tagName
+			if(tagName == "TD") {
+				
+				// 클릭된 TD tag를 감싸고 있는 TR객체(누구냐)
+				let tr = ev.target.closest("TR").dataset
+				// 변수 줄이기
+				// let seq = ev.target.closest("TR").dataset.seq
+				let td_seq = tr.seq
+				let td_edate = tr.edate
+				
+				// 완료날짜가 있냐?
+				let confirm_msg = td_edate
+									? "완료를 취소합니다!!!"
+									: "TODO를 완료했나요?";
+				if(confirm(confirm_msg)) {
+					// location 앞에서는 document. 생략해도 된대
+					location.href 
+						= "${rootPath}/expire?td_seq=" + td_seq
+				}
+			}
+		})
+	})
+	
+</script>
+
 
 </head>
 <body>
@@ -134,12 +210,17 @@
 		${ERROR}${COMP}
 	</div>
 	<table class="td_list">
-		<c:forEach items="${TDLIST}" var="TD" 
+		<c:forEach items="${TDLIST}" 
+					var="TD" 
 					varStatus="ST">
-			<tr>
+			<tr data-seq="${TD.td_seq}" 
+				data-edate="${TD.td_edate}">
+					
 				<td class="count">${ST.count}</td>
 				<td class="sdate">${TD.td_sdate}<br/>${TD.td_stime}</td>
-				<td class="doit">${TD.td_doit}</td>
+				<td class="doit ${empty TD.td_edate 
+									? ''
+									: 'through-text' }">${TD.td_doit}</td>
 				<td class="edate">${TD.td_edate}<br/>${TD.td_etime}</td>
 			</tr>
 		</c:forEach>

@@ -76,6 +76,8 @@ public class FrontController extends HttpServlet{
 		 * 요청을 처리하기 위한 준비
 		 */
 		commands.put("/insert", new TodoCommandImplV1()); // 이런식으로 uri에 따른 mapping만 추가해주면 된다?
+	
+		commands.put("/expire", new TodoCommandImplV1());
 	}
 	
 	// doGet(), doPost()로 분리하여 요청을 처리하던 방식을 
