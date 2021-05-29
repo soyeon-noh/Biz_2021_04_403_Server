@@ -212,7 +212,7 @@
 	<table class="td_list">
 		<c:forEach items="${TDLIST}" 
 					var="TD" 
-					varStatus="ST">
+					varStatus="ST"> <%--1부터 시작하는 Index값 --%>
 			<tr data-seq="${TD.td_seq}" 
 				data-edate="${TD.td_edate}">
 					

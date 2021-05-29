@@ -90,8 +90,9 @@ public class FrontController extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		
 		// Web에서 요청한 path 가져오기 
-		String urlPath = req.getRequestURI();
-		String path = urlPath.substring(req.getContextPath().length());
+		String urlPath = req.getRequestURI(); // URI 전체 추
+		String path = urlPath.substring(req.getContextPath().length()); // root path말고 나머지 경로를 저장해
+		// substring() 해당 길이만큼지우는건가?
 		
 		// req 된 URI 중에서
 		// 실제 subPath 부분을 사용하여
@@ -101,6 +102,9 @@ public class FrontController extends HttpServlet{
 			// 각 Command 객체의 execute() method에게
 			// 실제 요청을 처리하도록 위임하는 것
 			subCommand.execute(req, resp); //실제로 실행
+			
+			// ex) todo/insert라는 경로로 들어왔으면 
+			// 		Mab에 "/insert", new TodoCommandImplV1()
 			
 		}
 	}

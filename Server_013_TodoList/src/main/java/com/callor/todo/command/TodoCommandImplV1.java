@@ -37,8 +37,8 @@ public class TodoCommandImplV1 implements TodoCommand{
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String td_doit = req.getParameter("td_doit");
-		String td_seq = req.getParameter("td_seq");
+		String td_doit = req.getParameter("td_doit"); // jsp의 form name 으로 가져
+		String td_seq = req.getParameter("td_seq"); // dblclick 했을 때 seq= ? 로 가져
 //		System.out.println(td_doit);
 		// Server APP에서 System.out.println() 대신 사용할 
 		//	console 출력 method
